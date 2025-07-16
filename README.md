@@ -31,6 +31,8 @@ OpenHands connects donors and recipients in a simple and effective way. Users ca
 - Yarn or npm
 - PostgreSQL (via Docker)
 
+front-end repo => https://github.com/Leonardo-Sabino/open-hands-fe
+
 Feel free to help
 
 <p align="center">
