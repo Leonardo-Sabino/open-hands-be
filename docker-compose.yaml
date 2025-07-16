@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  dev-db:
+    image: postgres:13
+    container_name: open-hands-db
+    restart: always
+    ports:
+      - 5434:5432
+    volumes:
+      - ${DATABASE_VOLUME}
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: nest
+    networks:
+      - open-hands
+
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: minio-server
+    restart: on-failure
+    ports:
+      - ${ACCESS_API_PORT}:9000
+      - ${ACCESS_MINIO_PORT}:9001
+    volumes:
+      - ${MINIO_VOLUME}
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    command: server /data --console-address ":9001"
+    networks:
+      - open-hands
+
+networks:
+  open-hands:
+    driver: bridge
+  default:
+    external:
+      name: open-hands

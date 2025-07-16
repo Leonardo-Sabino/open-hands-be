@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  DONOR
+  RECEIVER
+}
+
+enum DonationStatus {
+  AVAILABLE
+  RESERVED
+  DELIVERED
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+
+model User {
+  id          String      @id @default(uuid())
+  name        String
+  email       String      @unique
+  password    String
+  avatarUrl   String?     // optional user profile image
+  role        Role        @default(RECEIVER)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  donations   Donation[]  @relation("DonorDonations")
+  requests    Request[]   @relation("UserRequests")
+}
+
+model Donation {
+  id          String      @id @default(uuid())
+  title       String
+  description String
+  imageUrl    String?
+  latitude    Float
+  longitude   Float
+  status      DonationStatus @default(AVAILABLE)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  donorId     String
+  donor       User        @relation("DonorDonations", fields: [donorId], references: [id])
+
+  requests    Request[]
+}
+
+model Request {
+  id           String    @id @default(uuid())
+  message      String?
+  status       RequestStatus @default(PENDING)
+  createdAt    DateTime @default(now())
+
+  userId       String
+  user         User     @relation("UserRequests", fields: [userId], references: [id])
+
+  donationId   String
+  donation     Donation @relation(fields: [donationId], references: [id])
+}
+
