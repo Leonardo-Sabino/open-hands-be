@@ -9,9 +9,13 @@ OpenHands connects donors and recipients in a simple and effective way. Users ca
 ## 🧱 Tech Stack
 
 - **Backend:** NestJS + PostgreSQL + Prisma
-- **Database:** PostgreSQL (via Docker)
+- **Database:** PostgreSQL
+- **Frontend:** React + TypeScript
+- **State Management:** Redux Toolkit
+- **Styling:** Tailwind CSS
 - **Auth:** JWT-based authentication
-- **Image Uploads:** Cloudinary or S3
+- **Image Uploads:** S3 (MinIO) for storing images
+- **Containerization:** Docker + Docker Compose
 
 ## 📂 Project Structure
 
