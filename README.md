@@ -28,7 +28,7 @@ OpenHands connects donors and recipients in a simple and effective way. Users ca
 
 - Node.js ≥ 18.x
 - Docker + Docker Compose
-- Yarn or npm
+- NPM
 - PostgreSQL (via Docker)
 
 front-end repo => https://github.com/Leonardo-Sabino/open-hands-fe
